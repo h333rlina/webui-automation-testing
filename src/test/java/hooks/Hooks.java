@@ -15,6 +15,7 @@ public class Hooks {
         // Setup ChromeDriver otomatis sesuai versi Chrome
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
+
     }
 
     @After
