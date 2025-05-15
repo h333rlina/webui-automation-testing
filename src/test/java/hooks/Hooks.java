@@ -12,16 +12,15 @@ public class Hooks {
 
     @Before
     public void setUp() {
-        // Setup ChromeDriver otomatis sesuai versi browser
+        // Setup ChromeDriver otomatis sesuai versi Chrome
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().window().maximize();
     }
 
     @After
     public void tearDown() throws InterruptedException {
         if (driver != null) {
-            Thread.sleep(5000); // delay 5 detik, sesuaikan dengan kebutuhan
+            Thread.sleep(5000); // delay 5 detik agar browser tidak langsung tertutup
             driver.quit();
         }
     }
