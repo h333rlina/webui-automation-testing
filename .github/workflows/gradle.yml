@@ -1,26 +1,60 @@
-name: CI Pipeline to staging/production environment
+name: Web Automation Workflow
+
 on:
+  push:
+    branches: [ "master" ]
   pull_request:
-    branches:
-      - staging
-      - main
+    branches: [ "master" ]
+  workflow_dispatch:
+
 jobs:
-  test:
+  build:
+    name: Build & Test
     runs-on: ubuntu-latest
-    name: Setup, test, and build project
-    env:
-      PORT: 5001
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-      - name: Test application
-        run: npm test
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: Build application
-        run: |
-          echo "Run command to build the application if present"
-          npm run build --if-present
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Set up ChromeDriver
+        uses: nanasess/setup-chromedriver@v2.2.2
+
+      - name: Run Cucumber Tests
+        run: ./gradlew clean cucumberTest
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: target/cucumber-report.html
+
+  dependency-submission:
+    name: Dependency Submission
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Submit Dependency Graph
+        uses: gradle/actions/dependency-submission@v4
