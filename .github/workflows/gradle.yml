@@ -1,48 +1,26 @@
-name: Automation Pipeline
-
+name: CI Pipeline to staging/production environment
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
+      - staging
       - main
-
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
-
+    name: Setup, test, and build project
+    env:
+      PORT: 5001
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      - name: Test application
+        run: npm test
 
-      - name: Run tests
-        run: ./gradlew clean test
-
-      - name: Upload Test Reports
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: build/reports/tests/test
-
-      - name: Upload Screenshots (if any)
-        uses: actions/upload-artifact@v2
-        with:
-          name: screenshots
-          path: build/screenshots/
+      - name: Build application
+        run: |
+          echo "Run command to build the application if present"
+          npm run build --if-present
