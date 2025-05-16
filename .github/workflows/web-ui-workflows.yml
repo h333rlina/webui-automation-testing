@@ -35,7 +35,7 @@ jobs:
 
       #execute
     - name: excute test
-      run: ./gradlew test
+      run: ./gradlew cucumber
 
 
 
