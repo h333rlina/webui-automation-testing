@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout UI repo
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Setup JDK 11
@@ -22,8 +22,14 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
 
-    - name: Give execute permission to gradlew
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@v1
+
+    - name: Install ChromeDriver
+      uses: browser-actions/setup-chromedriver@v1
+
+    - name: Make gradlew executable
       run: chmod +x ./gradlew
 
-    - name: Build and run UI tests
+    - name: Run tests
       run: ./gradlew clean test
