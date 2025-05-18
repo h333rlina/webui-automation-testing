@@ -19,11 +19,9 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-
-    - name: Install Chrome
-      run: browser-actions/setup-chrome@v1.7.3
-    - name: Grant execute permission to gradlew
-      run: chmod +x ./gradlew
-
+        
+    - name: Setup Chrome
+      uses: browser-actions/setup-chrome@v1.7.3
+      
     - name: Run tests
       run: ./gradlew clean test
