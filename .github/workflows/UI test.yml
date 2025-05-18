@@ -28,7 +28,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Run tests
-      run: ./gradlew cucumber
+      run: ./gradlew test
 
     - name: archive test result
       run: actions/upload-artifact@v4.6.2
