@@ -21,14 +21,9 @@ jobs:
         distribution: 'temurin'
 
     - name: Install Chrome
-      run: |
+      run: browser-actions/setup-chrome@v1.7.3
         sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
-
-    - name: Setup ChromeDriver
-      uses: nanasess/setup-chromedriver@v1.2.1
-      with:
-        chrome-version: 'latest'
+        sudo apt-get install -y google-chrome-stabl
 
     - name: Grant execute permission to gradlew
       run: chmod +x ./gradlew
