@@ -26,8 +26,8 @@ jobs:
       uses: browser-actions/setup-chrome@v1
 
     - name: Install ChromeDriver
-      uses: browser-actions/setup-chromedriver@v1
-
+      uses: browser-actions/setup-chrome@v1.7.3
+          
     - name: Make gradlew executable
       run: chmod +x ./gradlew
 
