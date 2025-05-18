@@ -12,19 +12,16 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
 
     - name: Install Chrome
       run: browser-actions/setup-chrome@v1.7.3
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stabl
-
     - name: Grant execute permission to gradlew
       run: chmod +x ./gradlew
 
