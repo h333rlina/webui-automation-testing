@@ -13,11 +13,11 @@ public class Hooks {
 
     @Before
     public void setUp() {
-        // Setup ChromeDriver otomatis sesuai versi Chrome
+
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
